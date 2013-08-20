@@ -1,0 +1,1 @@
+<h1>This is the phpMojo default home page.</h1>
