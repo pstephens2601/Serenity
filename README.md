@@ -1,5 +1,5 @@
-Welcome to Serenity | Serene PHP made easy
-==========================================
+Welcome to Serenity | "Serene PHP made easy"
+===========================================
 
 The goal of Serenity is to give php developers a easy to learn framework that will make web application development fast and easy.
 

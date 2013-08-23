@@ -3,16 +3,16 @@
 	/*-------------------------------------------------------------------------------------------------
 		This file handles all of the file loading for the application except for javascript
 	 	and css files, which must be loaded from the layout. The include order for loading is defined
-	 	in load_files(), however, it is mandatory that 'config/mojo_config.php' is always loaded first
+	 	in load_files(), however, it is mandatory that 'config/serenity_config.php' is always loaded first
 	 	as it defines constants required by the other config files.
 	 -------------------------------------------------------------------------------------------------*/
 
 	function load_files()
 	{
-		load_file('config/mojo_config.php');
+		load_file('config/serenity_config.php');
 		load_dir('lib/classes');
 		load_dir('config');
-		load_file('mojo_funcs.php');
+		load_file('serenity_funcs.php');
 		load_dir('app/models');
 		load_dir('app/controllers');
 	}
