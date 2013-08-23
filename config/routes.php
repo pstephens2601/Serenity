@@ -1,8 +1,16 @@
 <?php
-	
-	define("ROOT", "/");
+	/*-----------------------------------------------------------------
+		This file contains all of the routing information for your
+		application.
+	------------------------------------------------------------------*/
+
+	define("ROOT", "/"); //sets the root folder for your site, which is used for links.
 
 	$set = new router;
 
-	$set->root_to('static_pages#home');
+	/*------------------------------------------------------------------
+		Defines the root (home page) of your application.  To change the
+		root define the controller and action seperated by a "#".
+	-------------------------------------------------------------------*/
+	$set->root_to('defaults#default_page');
 ?> 
