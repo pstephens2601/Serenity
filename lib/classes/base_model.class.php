@@ -1,5 +1,5 @@
 <?php
-
+	
 	#	The baseModel class forms the framework for all of your models.  When creating a new model
 	#	it is required that it is a child of the baseModel class.
 
@@ -95,40 +95,46 @@
  		--------------------------------------------------------------------------------------------*/
 		function save() 
 		{
-			//get any params passed to function
-			$params = func_get_arg(0);
-
-			// Load params into object properties
-			foreach ($params as $key => $value) {
-				if ($this->$key = $value)
-				{
-
-				}
-			}
-
-			// Check information stored in object properties againts validators.
-			$this->run_validation;
-
-			// Insert data into the database.
-			if ($this->is_valid)
+			if (func_num_args() >= 1)
 			{
-				$insert_query = $this->build_query('insert');
-	
-				if ($this->db->query($insert_query))
+				//get any params passed to function
+				$params = func_get_arg(0);
+				// Load params into object properties
+				foreach ($params as $key => $value) {
+					if ($this->$key = $value)
+					{
+
+					}
+				}
+
+				// Check information stored in object properties againts validators.
+				$this->run_validation;
+
+				// Insert data into the database.
+				if ($this->is_valid)
 				{
-					$this->id = $this->db->insert_id;
-					return true;
+					$insert_query = $this->build_query('insert');
+		
+					if ($this->db->query($insert_query))
+					{
+						$this->id = $this->db->insert_id;
+						return true;
+					}
+					else
+					{
+						echo "Attempted query = " . $insert_query;
+						die($this->db->error);
+						return false;
+					}
 				}
 				else
 				{
-					echo "Attempted query = " . $insert_query;
-					die($this->db->error);
 					return false;
 				}
 			}
 			else
 			{
-				return false;
+				die("Serenity Error: Invalid number of arguments passed to save().");
 			}
 		}
 

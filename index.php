@@ -14,3 +14,4 @@
 	$front_end_controller = new frontEndController;
 	//grabs the controller + action from $_GET, creates the correct controller object, and calls the action method.
 	$front_end_controller->follow_path();
+?>
