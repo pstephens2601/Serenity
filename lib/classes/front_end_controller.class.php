@@ -1,8 +1,8 @@
 <?php
 	
-	/*	The front End Controller is responsible for all of the application routing.
-	 *
-	 */
+/*--------------------------------------------------------------------------------
+	The front End Controller is responsible for all of the application routing.
+-------------------------------------------------------------------------------*/
 
 	class frontEndController
 	{
