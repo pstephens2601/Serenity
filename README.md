@@ -20,7 +20,7 @@ This function is used to find and retrive the information for one object for one
 ex. of a simple login script:
 
 ```php
-if ($user->find('email', $email_entered, 'password_hash', md5(password_entered))
+if ($user->find('email', $email_entered, 'password_hash', md5($password_entered))
 {
 	//code to execute if user is logged in.
 }
@@ -34,6 +34,14 @@ else
 save()
 
 Saves the information stored in the objects public attributes to the coresponding columns in the database. This function can be passed a single argument in the form of an array, containing information to be assigned to the objects attributes before the information is stored in the database.
+
+The save() function will return true is the save is successful, and false if it is not.  It also requires that the $is_valid attribute of the object being saved is set to true.  This attribute is set to false when information in one the the models attributes fails a validation test set in the model.
+
+ex. of a save to the database:
+
+```php
+	$user->save();
+```
 
 *******************************************
 
