@@ -19,7 +19,7 @@ This function is used to find and retrive the information for one object for one
 
 ex. of a simple login script:
 
-'''php
+```php
 if ($user->find('email', $email_entered, 'password_hash', md5(password_entered))
 {
 	//code to execute if user is logged in.
@@ -28,7 +28,7 @@ else
 {
 	//code to execute if user is logged out
 }
-'''
+```
 
 *******************************************
 save()
