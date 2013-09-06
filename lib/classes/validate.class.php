@@ -1,5 +1,11 @@
 <?php
 
+	/*-----------------------------------------------------------------------------------------------
+	Serinity - "Serene PHP made easy."
+	
+	The validate class handles all input validation for the validators specified by your models.
+	------------------------------------------------------------------------------------------------*/
+
 	class validate
 	{
 		

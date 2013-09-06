@@ -1,7 +1,11 @@
 <?php
-	
-	#	The baseModel class forms the framework for all of your models.  When creating a new model
-	#	it is required that it is a child of the baseModel class.
+
+	/*-----------------------------------------------------------------------------------------------
+		Serinity - "Serene PHP made easy."
+
+		The baseModel class forms the framework for all of your models.  When creating a new model
+		it is required that it is a child of the baseModel class.
+	------------------------------------------------------------------------------------------------*/
 
 	class baseModel {
 
@@ -214,8 +218,8 @@
 		//Example function call: $this->get_associations('from_table:used_by', 'where:user_id=' . $user->id, 'return:budget_id');
 		
 
-		#	Checks to see if a form has been submitted using $_POST.  If one has been submitted it
-		#	places the values entered into the appropriate child class attributes.
+		//	Checks to see if a form has been submitted using $_POST.  If one has been submitted it
+		//	places the values entered into the appropriate child class attributes.
 
 		protected function validate()
 		{

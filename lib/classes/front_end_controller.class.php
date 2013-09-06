@@ -1,8 +1,9 @@
 <?php
-	
-/*--------------------------------------------------------------------------------
-	The front End Controller is responsible for all of the application routing.
--------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------
+		Serinity - "Serene PHP made easy."
+		
+		The front End Controller is responsible for all of the application routing.
+	------------------------------------------------------------------------------------------------*/
 
 	class frontEndController
 	{

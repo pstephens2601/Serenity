@@ -1,9 +1,12 @@
 <?php
+	/*-----------------------------------------------------------------------------------------------
+		Serinity - "Serene PHP made easy."
 
-	/*	Built on top of the mysqli class the database class handles interaction with the
-	 *	database.  A database object is created in the constructor of every model and can be accessed
-	 *	from within the model class using $this->db. 
-	 */
+		Built on top of the mysqli class the database class handles interaction with the
+	 	database.  A database object is created in the constructor of every model and can be accessed
+	 	from within the model class using $this->db. 
+	------------------------------------------------------------------------------------------------*/
+	
 
 	class database extends mysqli{
 
