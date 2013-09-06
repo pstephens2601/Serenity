@@ -9,6 +9,9 @@
 		controller.
 	-----------------------------------------------------------------------------*/
 ?>
+<h1>
+	Welcome to Serenity
+</h1>
 <p>
 	This is a default page view.
 </p>

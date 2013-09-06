@@ -1,11 +1,17 @@
 <?php
 
 	/*-----------------------------------------------------------------------
+		Serinity - "Serene PHP made easy."
+
 		This defaults controller is an example of how controllers are setup 
 		in Serenity.  Your controller class should have a pluralized name and
 		should extend the baseController. You can rename this file and class
 		to create a new controller. You may also delete this file once you
 		have created a controller of  our own.
+
+		Also, if a constructor is added to your controller you must call
+		its parent's constructor using parent::_constructor.
+
 	------------------------------------------------------------------------*/
 
 	class serene_defaults extends baseController 

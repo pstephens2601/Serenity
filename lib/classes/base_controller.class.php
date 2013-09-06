@@ -1,4 +1,13 @@
 <?php
+
+	/*-----------------------------------------------------------------------------------------------
+		Serinity - "Serene PHP made easy."
+
+		The base controller class will be the parent calss for all of your controllers.  It will
+		provide them with basic methods and functionality, while also performing nessasary actions
+		upon creation and destruction of your controller objects.
+	------------------------------------------------------------------------------------------------*/
+
 	class baseController {
 
 		protected $provides = array();
