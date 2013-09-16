@@ -24,6 +24,7 @@
 		}
 	}
 
+	//grabs data provided by a model for use in a view
 	function get_provide($key)
 	{
 		$provides = unserialize(PROVIDES);
@@ -38,6 +39,7 @@
 		}
 	}
 
+	//used to
 	function render($key)
 	{
 		$provides = unserialize(PROVIDES);
@@ -73,6 +75,7 @@
 		
 	}
 
+	//used to load all of the files in the stylesheets folder into your layout
 	function load_css() {
 		$css_files = scandir('app/assets/stylesheets');
 
@@ -84,6 +87,7 @@
 		}
 	}
 
+	//used to load all of the files in the javascript folder into your layout
 	function load_javascript() {
 		$js_files = scandir('app/assets/javascript');
 		foreach ($js_files as $js) {
@@ -108,6 +112,7 @@
 		}
 	}
 
+	//used to create a link in a view or layout
 	function link_to($path, $name)
 	{
 		
@@ -123,6 +128,7 @@
 		echo '>' . $name . '</a>';
 	}
 
+	//sets up the application for the current environment which can be set in config/serenity_config.php
 	function setup_environment()
 	{
 

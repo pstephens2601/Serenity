@@ -28,13 +28,14 @@
 				 * Array ( [0] => Array ( [0] => controller [1] => action ) [1] =>
 				 * app/views/controller/action.php )
 				 */
+				echo "follow_path if called";
 				$path = unserialize(ROOT_PATH);
 
 				$controller = $path[0];
 				$action = $path[1];
 			
 				$active_controller = new $controller($action);
-				call_user_func(array($active_controller, $action));
+				//call_user_func(array($active_controller, $action));
 				unset($active_controller);
 			}
 			else
