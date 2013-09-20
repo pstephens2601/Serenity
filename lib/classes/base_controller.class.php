@@ -22,8 +22,8 @@
 		{
 			$this->check_form_submission();
 			$this->get_params();
-			$this->$action();
 			$this->view = 'app/views/' . get_class($this) . '/' . $action . '.php';
+			$this->$action();
 		}
 
 		function ajax()
@@ -52,6 +52,7 @@
 		protected function set_view($view)
 		{
 			$this->view = 'app/views/' . get_class($this) . '/' . $view . '.php';
+			echo $this->view;
 		}
 
 		private function get_params()
@@ -93,6 +94,7 @@
 
 		function __destruct()
 		{
+			echo $this->view;
 			if ($this->ajax_request == false)
 			{
 				$this->dump_data();
