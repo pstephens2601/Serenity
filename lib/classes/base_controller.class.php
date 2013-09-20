@@ -52,7 +52,6 @@
 		protected function set_view($view)
 		{
 			$this->view = 'app/views/' . get_class($this) . '/' . $view . '.php';
-			echo $this->view;
 		}
 
 		private function get_params()
@@ -94,7 +93,6 @@
 
 		function __destruct()
 		{
-			echo $this->view;
 			if ($this->ajax_request == false)
 			{
 				$this->dump_data();
