@@ -35,7 +35,7 @@
 		}
 		else
 		{
-			die('phpMojo Error: invalid key given for get_provide().');
+			return false;
 		}
 	}
 
@@ -146,4 +146,5 @@
 			ini_set('error_reporting', 0);
 		}
 	}
+
 ?>
