@@ -11,8 +11,8 @@
 	{
 		load_file('config/serenity_config.php');
 		load_dir('lib/classes');
-		load_dir('config');
 		load_file('serenity_funcs.php');
+		load_dir('config');
 		load_dir('app/models');
 		load_dir('app/controllers');
 	}
