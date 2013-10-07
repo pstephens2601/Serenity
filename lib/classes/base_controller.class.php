@@ -3,7 +3,7 @@
 	/*-----------------------------------------------------------------------------------------------
 		Serinity - "Serene PHP made easy."
 
-		The base controller class will be the parent calss for all of your controllers.  It will
+		The base controller class will be the parent class for all of your controllers.  It will
 		provide them with basic methods and functionality, while also performing nessasary actions
 		upon creation and destruction of your controller objects.
 	------------------------------------------------------------------------------------------------*/
@@ -24,6 +24,7 @@
 			$this->get_params();
 			$this->view = 'app/views/' . get_class($this) . '/' . $action . '.php';
 			$this->$action();
+			$this->defineController();
 		}
 
 		function ajax()
@@ -65,6 +66,10 @@
 			}
 		}
 
+		private function defineController()
+		{
+			define('CONTROLLER', get_class($this));
+		}
 
 		private function check_form_submission()
 		{
