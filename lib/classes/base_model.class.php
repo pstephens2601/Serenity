@@ -23,12 +23,8 @@
 		-----------------------------------------------------------------------------------*/
 		function __construct()
 		{
-			if (HOST != '' && USER != '' && PASSWORD != '' && DATABASE != '')
-			{
-				echo "called!";
-				//database constant values set in config/db_config.php
-				$this->db = new database(HOST, USER, PASSWORD, DATABASE);
-			}
+			//database constant values set in config/db_config.php
+			$this->db = new database(HOST, USER, PASSWORD, DATABASE);
 		}
 
 		function find()
