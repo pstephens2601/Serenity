@@ -35,7 +35,7 @@
 		}
 		else
 		{
-			die('phpMojo Error: invalid key given for get_provide().');
+			return false;
 		}
 	}
 
@@ -89,11 +89,19 @@
 
 	//used to load all of the files in the javascript folder into your layout
 	function load_javascript() {
+
 		$js_files = scandir('app/assets/javascript');
+		$load_priorities = unserialize(JS_PRELOADS);
+
+		foreach ($load_priorities as $js_file)
+		{
+			echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js_file . "\"></script>\n";
+		}
+
 		foreach ($js_files as $js) {
-			if (($js != '.') && ($js != '..'))
+			if (($js != '.') && ($js != '..') && (!in_array($js, $load_priorities)))
 			{
-				echo '<script type="text/javascript" src="' . ROOT . '/app/assets/javascript/' . $js . "\"></script>\n";
+				echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js . "\"></script>\n";
 			}
 		}
 	}
@@ -146,4 +154,13 @@
 			ini_set('error_reporting', 0);
 		}
 	}
+
+	//used to set load priority for javascript files that need to be loaded first.
+	//should only be used in the serenity_config file.
+	function js_preload($files)
+	{
+		$js_files = serialize($files);
+		define("JS_PRELOADS", $js_files);
+	}
+
 ?>
