@@ -51,7 +51,7 @@
 			}
 			else
 			{
-				echo "You are here!";
+				echo "Controller or Action not found!";
 				//header('Location: ../index.php');
 			}
 		}

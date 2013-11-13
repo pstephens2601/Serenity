@@ -71,28 +71,65 @@
 		}
 
 		/*--------------------------------------------------------------------
-			This method locates all records where all values in a paticular
-		 	column ($col) are equal to a the given value ($val). 
+			This method locates a group of records in the database. It may be
+		 	passed either 0 or 2 arguments.  If it is passed 0 arguments it
+		 	will return all rows in the table.  If it is passed 2 it will
+		 	return all rows where the value contained in the column given in
+		 	argument 0 is equal to argument 1.
 		 --------------------------------------------------------------------*/
-		function find_all($col, $val)
+		function find_all()
 		{
-			$query = "SELECT * FROM " . get_class($this) . "s WHERE $col ='$val'";
 
-			if ($results = $this->db->query($query))
+			$num_args = func_num_args();
+
+			if ($num_args == 2)
 			{
-				$result_set = array();
+				$col = func_get_arg(0);
+				$val = func_get_arg(1);
 
-				while($result = $results->fetch_assoc())
+				$query = "SELECT * FROM " . get_class($this) . "s WHERE $col ='$val'";
+
+				if ($results = $this->db->query($query))
 				{
-					$result_set[] = $result;
-				}
+					$result_set = array();
 
-				return $result_set;
+					while($result = $results->fetch_assoc())
+					{
+						$result_set[] = $result;
+					}
+
+					return $result_set;
+				}
+				else
+				{
+					die("Serenity Error: find_all()");
+				}
+			}
+			elseif ($num_args == 0)
+			{
+				$query = "SELECT * FROM " . get_class($this);
+
+				if ($results = $this->db->query($query))
+				{
+					$result_set = array();
+
+					while($result = $results->fetch_assoc())
+					{
+						$result_set[] = $result;
+					}
+
+					return $result_set;
+				}
+				else
+				{
+					die("Serenity Error: find_all()");
+				}
 			}
 			else
 			{
-				die("phpMojo Error: find_all()");
+				die("Serenity Error: Invalid number of arguments passed to find_all()");
 			}
+
 		}
 
 		/*------------------------------------------------------------------------------------------

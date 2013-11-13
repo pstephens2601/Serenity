@@ -78,9 +78,15 @@
 	//used to load all of the files in the stylesheets folder into your layout
 	function load_css() {
 		$css_files = scandir('app/assets/stylesheets');
+		$load_priorities = unserialize(CSS_PRELOADS);
+
+		foreach ($load_priorities as $css_file)
+		{
+			echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css_file . "\">\n";
+		}
 
 		foreach ($css_files as $css) {
-			if (($css != '.') && ($css != '..'))
+			if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
 			{
 				echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
 			}
@@ -161,6 +167,14 @@
 	{
 		$js_files = serialize($files);
 		define("JS_PRELOADS", $js_files);
+	}
+
+	//used to set load priority for css files that need to be loaded first.
+	//should only be used in the serenity_config file.
+	function css_preload($files)
+	{
+		$css_files = serialize($files);
+		define("CSS_PRELOADS", $css_files);
 	}
 
 ?>
