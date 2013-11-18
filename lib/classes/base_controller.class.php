@@ -104,7 +104,5 @@
 				include('app/views/layouts/' . $this->layout .'.php');
 			}
 		}
-
-
 	}
 ?>

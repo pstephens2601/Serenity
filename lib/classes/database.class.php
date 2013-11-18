@@ -34,7 +34,7 @@
 
 		function mojo_query($query)
 		{
-			if($query_result = $this->query($query))
+			if($query_result = $this->query($this->real_escape_string($query)))
 			{
 				if (func_num_args() > 1)
 				{

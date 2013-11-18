@@ -21,6 +21,7 @@
 		This helper function is used to load entire directories. If a file in the directory has already
 	 	been loaded this function will not include it again.
 	 --------------------------------------------------------------------------------------------------*/
+	 
 	function load_dir($directory)
 	{
 		$files = scandir($directory);
