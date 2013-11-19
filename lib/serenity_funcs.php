@@ -142,6 +142,25 @@
 		echo '>' . $name . '</a>';
 	}
 
+	//used to insert an image into the page without naming the full path
+	function img($file_name) {
+
+		$num_args = func_num_args();
+
+		if ($num_args < 2)
+		{
+			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '">';
+		}
+		elseif ($num_args == 2)
+		{
+			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
+		}
+		else
+		{
+			die('Serenity Error: Invalid number of arguments passed to img()');
+		}
+	}
+
 	//sets up the application for the current environment which can be set in config/serenity_config.php
 	function setup_environment()
 	{
