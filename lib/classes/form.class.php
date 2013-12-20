@@ -51,6 +51,9 @@
 
 					$html .= ">\n";
 					break;
+				case 'hidden':
+					$html .= '<input type="hidden" name="' . func_get_arg(1) . '" value="' . func_get_arg(2) . '">';
+					break;
 				case 'submit': // Argument format (type, value, class(optional))
 					$html .= '<input type="submit" value="' . func_get_arg(1) . '" name="' . $this->controller . ':submit" class="' . func_get_arg(2). '">';
 					break;
