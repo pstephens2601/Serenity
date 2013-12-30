@@ -78,17 +78,21 @@
 	//used to load all of the files in the stylesheets folder into your layout
 	function load_css() {
 		$css_files = scandir('app/assets/stylesheets');
-		$load_priorities = unserialize(CSS_PRELOADS);
 
-		foreach ($load_priorities as $css_file)
+		if (defined("CSS_PRELOADS"))
 		{
-			echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css_file . "\">\n";
-		}
-
-		foreach ($css_files as $css) {
-			if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
+			$load_priorities = unserialize(CSS_PRELOADS);
+		
+			foreach ($load_priorities as $css_file)
 			{
-				echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
+				echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css_file . "\">\n";
+			}
+
+			foreach ($css_files as $css) {
+				if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
+				{
+					echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
+				}
 			}
 		}
 	}
@@ -96,18 +100,21 @@
 	//used to load all of the files in the javascript folder into your layout
 	function load_javascript() {
 
-		$js_files = scandir('app/assets/javascript');
-		$load_priorities = unserialize(JS_PRELOADS);
-
-		foreach ($load_priorities as $js_file)
+		if (defined("CSS_PRELOADS"))
 		{
-			echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js_file . "\"></script>\n";
-		}
+			$js_files = scandir('app/assets/javascript');
+			$load_priorities = unserialize(JS_PRELOADS);
 
-		foreach ($js_files as $js) {
-			if (($js != '.') && ($js != '..') && (!in_array($js, $load_priorities)))
+			foreach ($load_priorities as $js_file)
 			{
-				echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js . "\"></script>\n";
+				echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js_file . "\"></script>\n";
+			}
+
+			foreach ($js_files as $js) {
+				if (($js != '.') && ($js != '..') && (!in_array($js, $load_priorities)))
+				{
+					echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js . "\"></script>\n";
+				}
 			}
 		}
 	}
