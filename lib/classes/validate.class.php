@@ -13,17 +13,6 @@
 		{
 			if ($type == 'max')
 			{
-				if (strlen($value) > $length)
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
-			elseif ($type == 'min')
-			{
 				if (strlen($value) < $length)
 				{
 					return true;
@@ -31,6 +20,17 @@
 				else
 				{
 					return false;
+				}
+			}
+			elseif ($type == 'min')
+			{
+				if (strlen($value) < $length)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
 				}
 			}
 		}

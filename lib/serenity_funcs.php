@@ -100,7 +100,7 @@
 	//used to load all of the files in the javascript folder into your layout
 	function load_javascript() {
 
-		if (defined("CSS_PRELOADS"))
+		if (defined("JS_PRELOADS"))
 		{
 			$js_files = scandir('app/assets/javascript');
 			$load_priorities = unserialize(JS_PRELOADS);

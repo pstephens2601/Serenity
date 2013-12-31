@@ -152,7 +152,7 @@
 				}
 
 				// Check information stored in object properties againts validators.
-				$this->run_validation;
+				$this->run_validation();
 
 				// Insert data into the database.
 				if ($this->is_valid)
@@ -178,7 +178,30 @@
 			}
 			else
 			{
-				die("Serenity Error: Invalid number of arguments passed to save().");
+				// Check information stored in object properties againts validators.
+				$this->run_validation();
+
+				// Insert data into the database.
+				if ($this->is_valid)
+				{
+					$insert_query = $this->build_query('insert');
+		
+					if ($this->db->query($insert_query))
+					{
+						$this->id = $this->db->insert_id;
+						return true;
+					}
+					else
+					{
+						echo "Attempted query = " . $insert_query;
+						die($this->db->error);
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 
@@ -280,15 +303,16 @@
 		-------------------------------------------------------*/
 		protected function run_validation()
 		{
+			$var;
 			
 			foreach ($this->validators as $validator)
 			{
 				foreach ($validator as $current_action)
 				{
 					$action_pair = explode(':', $current_action);
-
+				
 					//if the action pair is the var name or is_present
-					if (count($action_pair == 1))
+					if (count($action_pair) == 1)
 					{
 						$var = $action_pair[0];
 					}
@@ -296,41 +320,29 @@
 					{
 						switch ($action_pair[0])
 						{
-							case 'min-value':
-								if (!validate::length($this->$var, $action_pair[1], 'min'))
+							case 'min-length':
+								if (!validate::length($var, $action_pair[1], 'min'))
 								{
 									$this->is_valid = false;
 								}
 								break;
 							case 'max-length':
-								if (!validate::length($this->$var, $action_pair[1], 'max'))
+								if (!validate::length($var, $action_pair[1], 'max'))
 								{
 									$this->is_valid = false;
 								}
 								break;
 							case 'format':
-								if (!validate::has_format($var, $action_pair[1]))
+								if (!validate::has_form($var, $action_pair[1]))
 								{
 									$this->is_valid = false;
 								}
-							case 'check':
-								if ($action_pair[1] == 'is_present')
+								break;
+							case 'match':
+								echo $var;
+								if (!validate::match($var, $this->$action_pair[1]))
 								{
-									if (!validate::is_present($this->$var))
-									{
-										$this->is_valid = false;
-									}
-								}
-								elseif ($action_pair[1] == 'match')
-								{
-									if (!validate::match($this->$var, $this->$action_pair[1]))
-									{
-										$this->is_valid = false;
-									}
-								}
-								elseif ($action_pair[1] == 'unique')
-								{
-
+									$this->is_valid = false;
 								}
 								break;
 							default:
@@ -340,7 +352,6 @@
 					}
 				}
 			}
-		
 		}
 
 		#	Used to build database queries.
