@@ -13,9 +13,9 @@
 		protected $db; //used to hold the database object
 		protected $form; //holds the name of the form if one has been submitted
 		protected $is_valid = true; //used to determine if the current object can be saved, can be set to false using a validate method.
-		protected $validation_errors = array();
+		protected $validation_messages = array();
 		protected $messages = array();
-		protected $validators = array();
+		protected $validators = array(); //hold all of the validation checks that are to be performed 
 
 		/*----------------------------------------------------------------------------------
 			Upon loading the baseModel class automatically checks for form submissions and
@@ -63,7 +63,6 @@
 				{
 					return false;
 				}
-
 			}
 
 			//if $result includes at least one row then $is_found = true
@@ -129,7 +128,30 @@
 			{
 				die("Serenity Error: Invalid number of arguments passed to find_all()");
 			}
+		}
 
+		/*---------------------------------------------------------------------------------
+			Used to see if a matching value already exists in the database.
+		----------------------------------------------------------------------------------*/
+		function is_unique($value) {
+
+			$query = 'SELECT * FROM ' . get_class($this) . 's WHERE ' . $value . " = '" .$this->$value . "'";
+
+			if ($result = $this->db->query($query))
+			{
+				if ($result->num_rows > 0)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				die('Serenity Error: is_unique returned QUERY FAILED! ' . $this->db->error);
+			}
 		}
 
 		/*------------------------------------------------------------------------------------------
@@ -298,6 +320,17 @@
 		}
 
 		/*------------------------------------------------------
+			Used to add validation messages that can be displayed 
+			when a field does not pass validation.
+		--------------------------------------------------------*/
+		protected function add_validation_message($variable, $validator, $message)
+		{
+			$validation_message = array($variable, $validator, $message);
+
+			$this->validation_messages[] = $validation_message;
+		}
+
+		/*------------------------------------------------------
 			Runs the form validations declared in $validators.
 
 		-------------------------------------------------------*/
@@ -314,39 +347,54 @@
 					//if the action pair is the var name or is_present
 					if (count($action_pair) == 1)
 					{
-						$var = $action_pair[0];
+						if ($action_pair[0] == 'unique')
+						{
+							if ($this->is_unique($var))
+							{
+								$this->check_for_validation_message($var, 'unique');
+								$this->is_valid = false;
+							}
+						}
+						else
+						{
+							$var = $action_pair[0];
+						}
 					}
 					else
 					{
 						switch ($action_pair[0])
 						{
 							case 'min-length':
-								if (!validate::length($var, $action_pair[1], 'min'))
+								if (!validate::length($this->$var, $action_pair[1], 'min'))
 								{
+									$this->check_for_validation_message($var, 'min-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'max-length':
-								if (!validate::length($var, $action_pair[1], 'max'))
+								if (!validate::length($this->$var, $action_pair[1], 'max'))
 								{
+									$this->check_for_validation_message($var, 'max-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'format':
-								if (!validate::has_form($var, $action_pair[1]))
+								if (!validate::has_form($this->$var, $action_pair[1]))
 								{
+									$this->check_for_validation_message($var, 'format');
 									$this->is_valid = false;
 								}
 								break;
 							case 'match':
-								echo $var;
-								if (!validate::match($var, $this->$action_pair[1]))
+
+								if (!validate::match($this->$var, $this->$action_pair[1]))
 								{
+									$this->check_for_validation_message($var, 'match');
 									$this->is_valid = false;
 								}
 								break;
 							default:
-								# code...
+								die("Serenity Error: Invalid validation checked declared.");
 								break;
 						}
 					}
@@ -465,6 +513,36 @@
 			{
 				echo "Attempted query = " . $query;
 				die($this->db->error);
+			}
+		}
+
+		/*-------------------------------------------------------------
+			Searches through all of the model's validation messages to
+			see if there is one that applies and puts it into messages
+			if there is.
+		---------------------------------------------------------------*/
+		private function check_for_validation_message($variable, $validation)
+		{
+			foreach($this->validation_messages as $validation_message)
+			{
+				if ($validation_message[0] == $variable && $validation_message[1] == $validation)
+				{
+					//Search messages to see if the message already exists.
+					$message_exists = false;
+
+					foreach($this->messages as $message)
+					{
+						if ($message == $validation_message[2])
+						{
+							$message_exists = true;
+						}
+					}
+
+					if ($message_exists == false)
+					{
+						$this->messages[] = $validation_message[2];
+					}
+				}
 			}
 		}
 	}
