@@ -40,6 +40,15 @@
 			return $this->post;
 		}
 
+		/*-------------------------------------------------------------------
+			Redirects the user to another page.  Can only be used before
+			any output is written to the browser.
+		--------------------------------------------------------------------*/
+		function to_page($url)
+		{
+			header("Location: " . ROOT . $url);
+		}
+
 		protected function provide($key, $value)
 		{
 			$this->provides[$key] = $value;

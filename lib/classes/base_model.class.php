@@ -1,7 +1,7 @@
 <?php
 
 	/*-----------------------------------------------------------------------------------------------
-		Serinity - "Serene PHP made easy."
+		Serenity - "Serene PHP made easy."
 
 		The baseModel class forms the framework for all of your models.  When creating a new model
 		it is required that it is a child of the baseModel class.
@@ -13,9 +13,9 @@
 		protected $db; //used to hold the database object
 		protected $form; //holds the name of the form if one has been submitted
 		protected $is_valid = true; //used to determine if the current object can be saved, can be set to false using a validate method.
-		protected $validation_messages = array();
+		protected $validation_errors = array();
 		protected $messages = array();
-		protected $validators = array(); //hold all of the validation checks that are to be performed 
+		protected $validators = array();
 
 		/*----------------------------------------------------------------------------------
 			Upon loading the baseModel class automatically checks for form submissions and
@@ -101,12 +101,13 @@
 				}
 				else
 				{
-					die("Serenity Error: find_all()");
+					die("Serenity Error: There was an error when executing " . __METHOD__ . "() on line " . __LINE__ . "
+					 - the database query failed for the following reason (" . $this->db->error . ").");
 				}
 			}
 			elseif ($num_args == 0)
 			{
-				$query = "SELECT * FROM " . get_class($this);
+				$query = "SELECT * FROM " . get_class($this) . 's';
 
 				if ($results = $this->db->query($query))
 				{
@@ -121,37 +122,15 @@
 				}
 				else
 				{
-					die("Serenity Error: find_all()");
+					die("Serenity Error: There was an error when executing " . __METHOD__ . "() on line " . __LINE__ . "
+					 - the database query failed for the following reason (" . $this->db->error . ").");
 				}
 			}
 			else
 			{
 				die("Serenity Error: Invalid number of arguments passed to find_all()");
 			}
-		}
 
-		/*---------------------------------------------------------------------------------
-			Used to see if a matching value already exists in the database.
-		----------------------------------------------------------------------------------*/
-		function is_unique($value) {
-
-			$query = 'SELECT * FROM ' . get_class($this) . 's WHERE ' . $value . " = '" .$this->$value . "'";
-
-			if ($result = $this->db->query($query))
-			{
-				if ($result->num_rows > 0)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				die('Serenity Error: is_unique returned QUERY FAILED! ' . $this->db->error);
-			}
 		}
 
 		/*------------------------------------------------------------------------------------------
@@ -174,7 +153,7 @@
 				}
 
 				// Check information stored in object properties againts validators.
-				$this->run_validation();
+				$this->run_validation;
 
 				// Insert data into the database.
 				if ($this->is_valid)
@@ -200,30 +179,7 @@
 			}
 			else
 			{
-				// Check information stored in object properties againts validators.
-				$this->run_validation();
-
-				// Insert data into the database.
-				if ($this->is_valid)
-				{
-					$insert_query = $this->build_query('insert');
-		
-					if ($this->db->query($insert_query))
-					{
-						$this->id = $this->db->insert_id;
-						return true;
-					}
-					else
-					{
-						echo "Attempted query = " . $insert_query;
-						die($this->db->error);
-						return false;
-					}
-				}
-				else
-				{
-					return false;
-				}
+				die("Serenity Error: Invalid number of arguments passed to save().");
 			}
 		}
 
@@ -320,86 +276,72 @@
 		}
 
 		/*------------------------------------------------------
-			Used to add validation messages that can be displayed 
-			when a field does not pass validation.
-		--------------------------------------------------------*/
-		protected function add_validation_message($variable, $validator, $message)
-		{
-			$validation_message = array($variable, $validator, $message);
-
-			$this->validation_messages[] = $validation_message;
-		}
-
-		/*------------------------------------------------------
 			Runs the form validations declared in $validators.
 
 		-------------------------------------------------------*/
 		protected function run_validation()
 		{
-			$var;
 			
 			foreach ($this->validators as $validator)
 			{
 				foreach ($validator as $current_action)
 				{
 					$action_pair = explode(':', $current_action);
-				
+
 					//if the action pair is the var name or is_present
-					if (count($action_pair) == 1)
+					if (count($action_pair == 1))
 					{
-						if ($action_pair[0] == 'unique')
-						{
-							if ($this->is_unique($var))
-							{
-								$this->check_for_validation_message($var, 'unique');
-								$this->is_valid = false;
-							}
-						}
-						else
-						{
-							$var = $action_pair[0];
-						}
+						$var = $action_pair[0];
 					}
 					else
 					{
 						switch ($action_pair[0])
 						{
-							case 'min-length':
+							case 'min-value':
 								if (!validate::length($this->$var, $action_pair[1], 'min'))
 								{
-									$this->check_for_validation_message($var, 'min-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'max-length':
 								if (!validate::length($this->$var, $action_pair[1], 'max'))
 								{
-									$this->check_for_validation_message($var, 'max-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'format':
-								if (!validate::has_form($this->$var, $action_pair[1]))
+								if (!validate::has_format($var, $action_pair[1]))
 								{
-									$this->check_for_validation_message($var, 'format');
 									$this->is_valid = false;
 								}
-								break;
-							case 'match':
-
-								if (!validate::match($this->$var, $this->$action_pair[1]))
+							case 'check':
+								if ($action_pair[1] == 'is_present')
 								{
-									$this->check_for_validation_message($var, 'match');
-									$this->is_valid = false;
+									if (!validate::is_present($this->$var))
+									{
+										$this->is_valid = false;
+									}
+								}
+								elseif ($action_pair[1] == 'match')
+								{
+									if (!validate::match($this->$var, $this->$action_pair[1]))
+									{
+										$this->is_valid = false;
+									}
+								}
+								elseif ($action_pair[1] == 'unique')
+								{
+
 								}
 								break;
 							default:
-								die("Serenity Error: Invalid validation checked declared.");
+								# code...
 								break;
 						}
 					}
 				}
 			}
+		
 		}
 
 		#	Used to build database queries.
@@ -513,36 +455,6 @@
 			{
 				echo "Attempted query = " . $query;
 				die($this->db->error);
-			}
-		}
-
-		/*-------------------------------------------------------------
-			Searches through all of the model's validation messages to
-			see if there is one that applies and puts it into messages
-			if there is.
-		---------------------------------------------------------------*/
-		private function check_for_validation_message($variable, $validation)
-		{
-			foreach($this->validation_messages as $validation_message)
-			{
-				if ($validation_message[0] == $variable && $validation_message[1] == $validation)
-				{
-					//Search messages to see if the message already exists.
-					$message_exists = false;
-
-					foreach($this->messages as $message)
-					{
-						if ($message == $validation_message[2])
-						{
-							$message_exists = true;
-						}
-					}
-
-					if ($message_exists == false)
-					{
-						$this->messages[] = $validation_message[2];
-					}
-				}
 			}
 		}
 	}

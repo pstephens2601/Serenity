@@ -13,24 +13,24 @@
 		{
 			if ($type == 'max')
 			{
-				if (strlen($value) < $length)
+				if (strlen($value) > $length)
 				{
-					return true;
+					return false;
 				}
 				else
 				{
-					return false;
+					return true;
 				}
 			}
 			elseif ($type == 'min')
 			{
 				if (strlen($value) < $length)
 				{
-					return false;
+					return true;
 				}
 				else
 				{
-					return true;
+					return false;
 				}
 			}
 		}

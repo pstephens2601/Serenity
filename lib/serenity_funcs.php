@@ -78,21 +78,17 @@
 	//used to load all of the files in the stylesheets folder into your layout
 	function load_css() {
 		$css_files = scandir('app/assets/stylesheets');
+		$load_priorities = unserialize(CSS_PRELOADS);
 
-		if (defined("CSS_PRELOADS"))
+		foreach ($load_priorities as $css_file)
 		{
-			$load_priorities = unserialize(CSS_PRELOADS);
-		
-			foreach ($load_priorities as $css_file)
-			{
-				echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css_file . "\">\n";
-			}
+			echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css_file . "\">\n";
+		}
 
-			foreach ($css_files as $css) {
-				if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
-				{
-					echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
-				}
+		foreach ($css_files as $css) {
+			if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
+			{
+				echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
 			}
 		}
 	}
@@ -100,21 +96,18 @@
 	//used to load all of the files in the javascript folder into your layout
 	function load_javascript() {
 
-		if (defined("JS_PRELOADS"))
+		$js_files = scandir('app/assets/javascript');
+		$load_priorities = unserialize(JS_PRELOADS);
+
+		foreach ($load_priorities as $js_file)
 		{
-			$js_files = scandir('app/assets/javascript');
-			$load_priorities = unserialize(JS_PRELOADS);
+			echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js_file . "\"></script>\n";
+		}
 
-			foreach ($load_priorities as $js_file)
+		foreach ($js_files as $js) {
+			if (($js != '.') && ($js != '..') && (!in_array($js, $load_priorities)))
 			{
-				echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js_file . "\"></script>\n";
-			}
-
-			foreach ($js_files as $js) {
-				if (($js != '.') && ($js != '..') && (!in_array($js, $load_priorities)))
-				{
-					echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js . "\"></script>\n";
-				}
+				echo '<script type="text/javascript" src="' . ROOT . 'app/assets/javascript/' . $js . "\"></script>\n";
 			}
 		}
 	}
@@ -147,25 +140,6 @@
 		echo '<a href="' . ROOT . $path . '"';
 		if (isset($class)) echo ' class="' . $class . '"';
 		echo '>' . $name . '</a>';
-	}
-
-	//used to insert an image into the page without naming the full path
-	function img($file_name) {
-
-		$num_args = func_num_args();
-
-		if ($num_args < 2)
-		{
-			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '">';
-		}
-		elseif ($num_args == 2)
-		{
-			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
-		}
-		else
-		{
-			die('Serenity Error: Invalid number of arguments passed to img()');
-		}
 	}
 
 	//sets up the application for the current environment which can be set in config/serenity_config.php
