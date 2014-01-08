@@ -177,4 +177,9 @@
 		define("CSS_PRELOADS", $css_files);
 	}
 
+	function add($file)
+	{
+		require('pluggins/' . $file);
+	}
+
 ?>

@@ -15,6 +15,7 @@
 		load_dir('config');
 		load_dir('app/models');
 		load_dir('app/controllers');
+		load_file('pluggins/loader.php');
 	}
 
 	/*--------------------------------------------------------------------------------------------------
