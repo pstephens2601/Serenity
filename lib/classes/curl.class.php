@@ -6,7 +6,7 @@
 		function __construct($url)
 		{
 			$this->ch = curl_init();
-			curl_setopt($this->ch, CURLOPT_URL, $url)
+			curl_setopt($this->ch, CURLOPT_URL, $url);
 		}
 
 		public function execute()
