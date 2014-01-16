@@ -223,4 +223,10 @@
 		define("CSS_PRELOADS", $css_files);
 	}
 
+	//Used to add third party pluggins in the pluggins' loader
+	function add($file)
+	{
+		require('pluggins/' . $file);
+	}
+
 ?>
