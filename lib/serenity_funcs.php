@@ -182,6 +182,18 @@
 		{
 			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
 		}
+		elseif ($num_args == 3)
+		{
+			if (func_get_arg(2) === true)
+			{
+				echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
+			}
+			elseif (func_get_arg(2) === false)
+			{
+				$tag = '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
+				return $tag;
+			}
+		}
 		else
 		{
 			die('Serenity Error: Invalid number of arguments passed to img()');
