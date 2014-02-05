@@ -158,15 +158,33 @@
 	{
 		
 		$num_args = func_num_args();
+		$print = true;
 
 		if ($num_args > 2)
 		{
-			$class = func_get_arg(2);
+			if (func_get_arg(2) != false)
+			{
+				$class = func_get_arg(2);
+
+				echo '<a href="' . ROOT . $path . '"';
+				if (isset($class)) echo ' class="' . $class . '"';
+				echo '>' . $name . '</a>';
+			}
+			else
+			{
+				$html = '<a href="' . ROOT . $path . '"';
+				$html .= '>' . $name . '</a>';
+
+				return $html;
+			}	
+		}
+		else
+		{
+			echo '<a href="' . ROOT . $path . '"';
+			echo '>' . $name . '</a>';
 		}		
 
-		echo '<a href="' . ROOT . $path . '"';
-		if (isset($class)) echo ' class="' . $class . '"';
-		echo '>' . $name . '</a>';
+		
 	}
 
 	//used to insert an image into the page without naming the full path
@@ -181,18 +199,6 @@
 		elseif ($num_args == 2)
 		{
 			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
-		}
-		elseif ($num_args == 3)
-		{
-			if (func_get_arg(2) === true)
-			{
-				echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
-			}
-			elseif (func_get_arg(2) === false)
-			{
-				$tag = '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
-				return $tag;
-			}
 		}
 		else
 		{

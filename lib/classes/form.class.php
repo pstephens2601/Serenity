@@ -8,30 +8,45 @@
 
 	class form {
 
-		public $name;
-		public $action = "";
-		public $method = "post";
-		public $form;
-		public $controller;
+		private $name;
+		private $action = "";
+		private $method = "post";
+		private $form;
+		private $on_submit;
+		private $controller;
 
 		function __construct($action, $method, $name)
 		{
 			$this->action = $action;
 			$this->method = $method;
 			$this->name = $name;
+			if (func_num_args() > 3)
+			{
+				$this->on_submit = func_get_arg(3);
+			}
 			$this->controller = CONTROLLER;
 		}
 
 		function startForm()
 		{
-			$html = '<form action ="' . $this->action . '" method = "' . $this->method . '">';
+			$html = '<form action ="' . $this->action . '" method = "' . $this->method . '"';
+			if ($this->on_submit != '')
+			{
+				$html .= ' onsubmit="' . $this->on_submit . '" ';
+			}
+			$html .= '>';
 			$html .= '<input type="hidden" name="form" value="' . $this->name . '">';
 			echo $html;
 		}
 
 		function start_form()
 		{
-			$html = '<form action ="' . $this->action . '" method = "' . $this->method . '">';
+			$html = '<form action ="' . $this->action . '" method = "' . $this->method . '"';
+			if ($this->on_submit != '')
+			{
+				$html .= ' onsubmit="' . $this->on_submit . '" ';
+			}
+			$html .= '>';
 			$html .= '<input type="hidden" name="form" value="' . $this->name . '">';
 			echo $html;
 		}
