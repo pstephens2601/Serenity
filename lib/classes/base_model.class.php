@@ -179,7 +179,26 @@
 			}
 			else
 			{
-				die("Serenity Error: Invalid number of arguments passed to save().");
+				// Check information stored in object properties againts validators.
+				$this->run_validation();
+
+				// Insert data into the database.
+				if ($this->is_valid)
+				{
+					$insert_query = $this->build_query('insert');
+		
+					if ($this->db->query($insert_query))
+					{
+						$this->id = $this->db->insert_id;
+						return true;
+					}
+					else
+					{
+						echo "Attempted query = " . $insert_query;
+						die($this->db->error);
+						return false;
+					}
+				}
 			}
 		}
 
