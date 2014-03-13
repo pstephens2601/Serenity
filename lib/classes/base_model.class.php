@@ -295,72 +295,86 @@
 		}
 
 		/*------------------------------------------------------
+			Used to add validation messages that can be displayed 
+			when a field does not pass validation.
+		--------------------------------------------------------*/
+		protected function add_validation_message($variable, $validator, $message)
+		{
+			$validation_message = array($variable, $validator, $message);
+
+			$this->validation_messages[] = $validation_message;
+		}
+
+		/*------------------------------------------------------
 			Runs the form validations declared in $validators.
 
 		-------------------------------------------------------*/
 		protected function run_validation()
 		{
+			$var;
 			
 			foreach ($this->validators as $validator)
 			{
 				foreach ($validator as $current_action)
 				{
 					$action_pair = explode(':', $current_action);
-
+				
 					//if the action pair is the var name or is_present
-					if (count($action_pair == 1))
+					if (count($action_pair) == 1)
 					{
-						$var = $action_pair[0];
+						if ($action_pair[0] == 'unique')
+						{
+							if ($this->is_unique($var))
+							{
+								$this->check_for_validation_message($var, 'unique');
+								$this->is_valid = false;
+							}
+						}
+						else
+						{
+							$var = $action_pair[0];
+						}
 					}
 					else
 					{
 						switch ($action_pair[0])
 						{
-							case 'min-value':
+							case 'min-length':
 								if (!validate::length($this->$var, $action_pair[1], 'min'))
 								{
+									$this->check_for_validation_message($var, 'min-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'max-length':
 								if (!validate::length($this->$var, $action_pair[1], 'max'))
 								{
+									$this->check_for_validation_message($var, 'max-length');
 									$this->is_valid = false;
 								}
 								break;
 							case 'format':
-								if (!validate::has_format($var, $action_pair[1]))
+								if (!validate::has_form($this->$var, $action_pair[1]))
 								{
+									$this->check_for_validation_message($var, 'format');
 									$this->is_valid = false;
 								}
-							case 'check':
-								if ($action_pair[1] == 'is_present')
-								{
-									if (!validate::is_present($this->$var))
-									{
-										$this->is_valid = false;
-									}
-								}
-								elseif ($action_pair[1] == 'match')
-								{
-									if (!validate::match($this->$var, $this->$action_pair[1]))
-									{
-										$this->is_valid = false;
-									}
-								}
-								elseif ($action_pair[1] == 'unique')
-								{
+								break;
+							case 'match':
 
+								if (!validate::match($this->$var, $this->$action_pair[1]))
+								{
+									$this->check_for_validation_message($var, 'match');
+									$this->is_valid = false;
 								}
 								break;
 							default:
-								# code...
+								die("Serenity Error: Invalid validation checked declared.");
 								break;
 						}
 					}
 				}
 			}
-		
 		}
 
 		#	Used to build database queries.
