@@ -1,3 +1,14 @@
+/* Serenity CSS Framework.  This framework includes basic classes that format
+ * Serenity messages, and give the user a library of predefined classes for simple layout.
+ * As of this version this is not intended to be a full fledged CSS layout framework.
+ */
+
+
+
+/* Text Styles */
+.red-text {
+	color: red;
+}
 .bold {
 	font-weight: bold;
 }
@@ -64,4 +75,65 @@
 }
 .margin-top-100 {
 	margin-top: 100px;
+}
+
+/* Margin Left Classes */
+.margin-left-10 {
+	margin-left: 10px;
+}
+
+.margin-left-20 {
+	margin-left: 20px;
+}
+
+.margin-left-30 {
+	margin-left: 30px;
+}
+
+.margin-left-40 {
+	margin-left: 40px;
+}
+
+.margin-left-50 {
+	margin-left: 50px;
+}
+
+.margin-left-60 {
+	margin-left: 60px;
+}
+
+.margin-left-70 {
+	margin-left: 70px;
+}
+
+.margin-left-80 {
+	margin-left: 80px;
+}
+
+.margin-left-90 {
+	margin-left: 90px;
+}
+
+.margin-left-100 {
+	margin-left: 100px;
+}
+
+/* Minimum height Classes */
+.min-600 {
+	min-height: 600px;
+}
+
+/* Serenity Error Message Classes */
+
+div.Serene_Error {
+	width: 80%;
+	padding: 30px;
+	margin-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	background: #BC2A1A;
+	color: white;
+	border: solid;
+	border-color: #A40802;
+	border-width: 2px;
 }

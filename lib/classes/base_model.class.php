@@ -7,7 +7,8 @@
 		it is required that it is a child of the baseModel class.
 	------------------------------------------------------------------------------------------------*/
 
-	class baseModel {
+	class baseModel extends serene_object 
+	{
 
 		protected $id; //holds the uid for the model
 		protected $db; //used to hold the database object
@@ -101,8 +102,18 @@
 				}
 				else
 				{
-					die("Serenity Error: There was an error when executing " . __METHOD__ . "() on line " . __LINE__ . "
-					 - the database query failed for the following reason (" . $this->db->error . ").");
+					if (ENVIRONMENT == 'development')
+					{
+						$message = "Serene Error (Stay Calm!): ";
+						$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+						$message .= "- the database query failed for the following reason (" . $this->db->error . ").";
+
+						$this->print_error($message);
+					}
+					else
+					{
+						die('SERVER ERROR: Please try again later.');
+					}
 				}
 			}
 			elseif ($num_args == 0)
@@ -122,13 +133,30 @@
 				}
 				else
 				{
-					die("Serenity Error: There was an error when executing " . __METHOD__ . "() on line " . __LINE__ . "
-					 - the database query failed for the following reason (" . $this->db->error . ").");
+					if (ENVIRONMENT == 'development')
+					{
+						$message = "Serene Error (Stay Calm!): ";
+						$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+						$message .= "- the database query failed for the following reason (" . $this->db->error . ").";
+
+						$this->print_error($message);
+					}
+					else
+					{
+						die('SERVER ERROR: Please try again later.');
+					}
 				}
 			}
 			else
 			{
-				die("Serenity Error: Invalid number of arguments passed to find_all()");
+				if (ENVIRONMENT == 'development')
+				{
+					$this->print_error("Serene Error (Stay Calm!): invalid number of arguments passed to " . __METHOD__ . "() on line " . __LINE__);
+				}
+				else
+				{
+					die('SERVER ERROR: Please try again later.');
+				}
 			}
 
 		}
@@ -369,7 +397,14 @@
 								}
 								break;
 							default:
-								die("Serenity Error: Invalid validation checked declared.");
+								if (ENVIRONMENT == 'development')
+								{
+									$this->print_error("Serene Error (Stay Clam!):  Invalid validation checked declared.");
+								}
+								else
+								{
+									die('SERVER ERROR: Please try again later.');
+								}
 								break;
 						}
 					}
@@ -444,7 +479,14 @@
 				}
 			}
 			else {
-				echo 'phpMojo Error: Invalid type given for build_query() in class baseModel';
+				if (ENVIRONMENT == 'development')
+				{
+					$this->print_error("Serene Error (Stay Calm!): Invalid type given for build_query() in class baseModel.");
+				}
+				else
+				{
+					die('SERVER ERROR: Please try again later.');
+				}
 			}
 		}
 

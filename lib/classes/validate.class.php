@@ -6,7 +6,7 @@
 	The validate class handles all input validation for the validators specified by your models.
 	------------------------------------------------------------------------------------------------*/
 
-	class validate
+	class validate extends serene_object
 	{
 		
 		public static function length($value, $length, $type)

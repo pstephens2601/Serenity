@@ -1,11 +1,11 @@
 <?php
 	/*-----------------------------------------------------------------------------------------------
-		Serinity - "Serene PHP made easy."
+		Serenity - "Serene PHP made easy."
 		
 		The front End Controller is responsible for all of the application routing.
 	------------------------------------------------------------------------------------------------*/
 
-	class frontEndController
+	class frontEndController extends serene_object
 	{
 		var $path;
 		var $controllers;
@@ -33,9 +33,26 @@
 
 				$controller = $path[0];
 				$action = $path[1];
-			
-				$active_controller = new $controller($action);
-				unset($active_controller);
+				
+				if ((class_exists($controller)) && (method_exists($controller, $action)))
+				{
+					$active_controller = new $controller($action);
+					unset($active_controller);
+				}
+				else
+				{
+					if (ENVIRONMENT == 'development')
+					{
+
+						$message = "Serene Error (Stay Calm!): ROOT_PATH contains invalid values (Controller [$controller] or Action [$action] not found.  Please check to make sure both exist and are named correctly.)";
+						$this->print_error($message);
+						
+					}
+					else
+					{
+							die();
+					}
+				}
 			}
 			else
 			{
@@ -51,10 +68,24 @@
 			}
 			else
 			{
-				echo "Controller or Action not found!";
-				//header('Location: ../index.php');
+				if (ENVIRONMENT == 'development')
+				{
+
+					$message = "Serene Error (Stay Calm!): Controller [$controller] or Action [$action] not found.  Please check to make sure both exist and are named correctly.";
+					$this->print_error($message);
+					
+				}
+				else
+				{
+					if ($this->path != ROOT_PATH) {
+						header('Location: ../index.php');
+					}
+					else
+					{
+						die();
+					}
+				}
 			}
 		}
 	}
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-    class mail
+    class mail extends serene_object
     {
     	private $to;
     	private $from;

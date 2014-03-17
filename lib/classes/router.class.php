@@ -6,7 +6,8 @@
 		The router handles reroute requests that are set in config/routes.php.
 	------------------------------------------------------------------------------------------------*/
 
-	class router{
+	class router extends serene_object
+	{
 
 	private $path_url;
 	private $path_view;

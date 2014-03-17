@@ -8,7 +8,8 @@
 	------------------------------------------------------------------------------------------------*/
 	
 
-	class database extends mysqli{
+	class database extends mysqli
+	{
 
 		function __construct($host, $user, $pass, $db)
 		{
@@ -20,7 +21,7 @@
 				//provides detailed error information in the development environment.
 				if (ENVIRONMENT == 'development')
 				{
-					die('phpMojo Error-> Database Connection Error: Class: "' . get_class($this) . '"" has experienced the following error: ' . mysqli_connect_error());
+					die('Serene Error (Stay Calm!): Database Connection Error-> Class-> "' . get_class($this) . '"" has experienced the following error: ' . mysqli_connect_error());
 				}
 				else
 				{

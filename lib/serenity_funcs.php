@@ -19,7 +19,10 @@
 			}
 			else
 			{
-				echo "phpMojo Error: the defined view can not be found.";
+				if (ENVIRONMENT == 'development')
+				{
+					echo "<div class=\"Serene_Error\">Serene Error (Stay Calm!): the defined view [" . VIEW . "] can not be found. Did you remember to create it?</div>";
+				}
 			}
 		}
 	}
@@ -149,7 +152,10 @@
 		}
 		else
 		{
-			echo "phpMojo Error: partial not found.";
+			if (ENVIRONMENT == 'development')
+			{
+				echo "<div class=\"Serene_Error\">Serene Error (Stay Calm!): partial [_". $partial . ".php] not found.</div>";
+			}
 		}
 	}
 

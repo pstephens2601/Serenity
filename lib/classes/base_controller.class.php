@@ -8,7 +8,8 @@
 		upon creation and destruction of your controller objects.
 	------------------------------------------------------------------------------------------------*/
 
-	class baseController {
+	class baseController extends serene_object 
+	{
 
 		protected $provides = array();
 		protected $view;
@@ -31,7 +32,7 @@
 		{
 			$this->ajax_request = true;
 
-			echo "phpMojo: Your ajax request has been processed. To customize the response create an ajax function in your ";
+			echo "Serenity: Your ajax request has been processed. To customize the response create an ajax function in your ";
 			echo get_class($this) . " controller. Don't forget to set the ajax_request param to true.";
 		}
 

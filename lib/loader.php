@@ -10,6 +10,8 @@
 	function load_files()
 	{
 		load_file('config/serenity_config.php');
+		//serene_object must be preloaded as it is the base class for all classes
+		load_file('lib/classes/serene_object.class.php'); 
 		load_dir('lib/classes');
 		load_file('serenity_funcs.php');
 		load_dir('config');
@@ -37,11 +39,16 @@
 		}
 	}
 
-	/*	This helper function is used to load a single file. If the file has already
+	/*--------------------------------------------------------------------------------------------------
+		This helper function is used to load a single file. If the file has already
 	 	been loaded this function will not include it again.
-	 */
+	 --------------------------------------------------------------------------------------------------*/
 	function load_file($file)
 	{
 		require_once($file);
+	}
+
+	function load_classes() {
+
 	}
 ?>

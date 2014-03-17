@@ -6,7 +6,8 @@
 		The form class is used to quickly construct Serenity compliant forms.
 	------------------------------------------------------------------------------------------------*/
 
-	class form {
+	class form extends serene_object 
+	{
 
 		private $name;
 		private $action = "";

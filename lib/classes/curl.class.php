@@ -1,5 +1,6 @@
 <?php
-	class curl {
+	class curl extends serene_object 
+	{
 
 		public $error;
 		private $ch;
