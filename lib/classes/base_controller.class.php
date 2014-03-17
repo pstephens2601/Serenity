@@ -1,7 +1,7 @@
 <?php
 
 	/*-----------------------------------------------------------------------------------------------
-		Serinity - "Serene PHP made easy."
+		Serenity - "Serene PHP made easy."
 
 		The base controller class will be the parent class for all of your controllers.  It will
 		provide them with basic methods and functionality, while also performing nessasary actions

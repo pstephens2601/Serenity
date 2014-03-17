@@ -1,6 +1,6 @@
 <?php
 	/*-----------------------------------------------------------------------------------------------
-		Serinity - "Serene PHP made easy."
+		Serenity - "Serene PHP made easy."
 
 		Built on top of the mysqli class the database class handles interaction with the
 	 	database.  A database object is created in the constructor of every model and can be accessed

@@ -15,6 +15,7 @@
 		protected $form; //holds the name of the form if one has been submitted
 		protected $is_valid = true; //used to determine if the current object can be saved, can be set to false using a validate method.
 		protected $validation_errors = array();
+		protected $validation_messages = array();
 		protected $messages = array();
 		protected $validators = array();
 
@@ -159,6 +160,30 @@
 				}
 			}
 
+		}
+
+		/*---------------------------------------------------------------------------------
+			Used to see if a matching value already exists in the database.
+		----------------------------------------------------------------------------------*/
+		function is_unique($value) {
+
+			$query = 'SELECT * FROM ' . get_class($this) . 's WHERE ' . $value . " = '" .$this->$value . "'";
+
+			if ($result = $this->db->query($query))
+			{
+				if ($result->num_rows > 0)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				die('Serenity Error: is_unique returned QUERY FAILED! ' . $this->db->error);
+			}
 		}
 
 		/*------------------------------------------------------------------------------------------
@@ -530,6 +555,36 @@
 			{
 				echo "Attempted query = " . $query;
 				die($this->db->error);
+			}
+		}
+
+		/*-------------------------------------------------------------
+			Searches through all of the model's validation messages to
+			see if there is one that applies and puts it into messages
+			if there is.
+		---------------------------------------------------------------*/
+		private function check_for_validation_message($variable, $validation)
+		{
+			foreach($this->validation_messages as $validation_message)
+			{
+				if ($validation_message[0] == $variable && $validation_message[1] == $validation)
+				{
+					//Search messages to see if the message already exists.
+					$message_exists = false;
+
+					foreach($this->messages as $message)
+					{
+						if ($message == $validation_message[2])
+						{
+							$message_exists = true;
+						}
+					}
+
+					if ($message_exists == false)
+					{
+						$this->messages[] = $validation_message[2];
+					}
+				}
 			}
 		}
 	}
