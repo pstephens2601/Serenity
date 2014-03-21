@@ -1,5 +1,18 @@
 <?php
-	class curl extends serene_object 
+	/*-------------------------------------------------------------------------------
+		Serenity - "Serene PHP made easy."
+
+		Developer: Patrick Stephens
+		Email: pstephens2601@gmail.com
+		Github Repository: https://github.com/pstephens2601/Serenity
+		Creation Date: 1-8-2014
+		Last Edit Date: 3-21-2014
+
+		Class Notes - The cURL class can be used for creating cURL connections to 
+		other sites.
+	---------------------------------------------------------------------------------*/
+
+	class curl extends sereneObject 
 	{
 
 		public $error;

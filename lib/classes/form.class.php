@@ -1,12 +1,18 @@
 <?php
-	/*-----------------------------------------------------------------------------------------------
-		Serinity - "Serene PHP made easy."
+	/*-------------------------------------------------------------------------------
+		Serenity - "Serene PHP made easy."
 
-		
-		The form class is used to quickly construct Serenity compliant forms.
-	------------------------------------------------------------------------------------------------*/
+		Developer: Patrick Stephens
+		Email: pstephens2601@gmail.com
+		Github Repository: https://github.com/pstephens2601/Serenity
+		Creation Date: 10-7-2013
+		Last Edit Date: 3-21-2014
 
-	class form extends serene_object 
+		Class Notes - The form class is used to quickly construct Serenity compliant
+		forms.
+	---------------------------------------------------------------------------------*/
+
+	class form extends sereneObject 
 	{
 
 		private $name;

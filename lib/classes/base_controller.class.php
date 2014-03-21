@@ -1,14 +1,20 @@
 <?php
-
-	/*-----------------------------------------------------------------------------------------------
+	/*-------------------------------------------------------------------------------
 		Serenity - "Serene PHP made easy."
 
-		The base controller class will be the parent class for all of your controllers.  It will
-		provide them with basic methods and functionality, while also performing nessasary actions
-		upon creation and destruction of your controller objects.
-	------------------------------------------------------------------------------------------------*/
+		Developer: Patrick Stephens
+		Email: pstephens2601@gmail.com
+		Github Repository: https://github.com/pstephens2601/Serenity
+		Creation Date: 8-17-2013
+		Last Edit Date: 3-21-2014
 
-	class baseController extends serene_object 
+		Class Notes - The base controller class will be the parent class for all of 
+		your controllers.  It will provide them with basic methods and functionality, 
+		while also performing nessasary actions upon creation and destruction of your
+		controller objects.
+	---------------------------------------------------------------------------------*/
+
+	class baseController extends sereneObject 
 	{
 
 		protected $provides = array();
@@ -76,6 +82,65 @@
 			}
 		}
 
+		/*-------------------------------------------------------------------
+			Parses a nested associative array into a comma seperated value
+			and returns list as a string. Takes either one or two arguments.
+
+			Arguments:
+				1. array to be parsed
+				2. array of keys to be included if not all keys are to be
+				   included in the list
+		--------------------------------------------------------------------*/
+		protected function to_csv($list)
+		{
+			$csv_string = '';
+
+			foreach ($list as $line)
+			{
+				end($line);
+				$last_index = key($line);
+				reset($line);
+
+				foreach ($line as $key => $item)
+				{
+					if (func_num_args() > 1)
+					{
+						if (in_array($key, func_get_arg(1)))
+						{
+							$csv_string .= "\"" . $item . "\"";
+
+							if ($key != $last_index)
+							{
+								$csv_string .= ", ";
+							}
+							else
+							{
+								$csv_string .= "\n";
+							}
+						}
+					}
+					else
+					{
+						$csv_string .= "\"" . $item . "\"";
+
+						if ($key != $last_index)
+						{
+							$csv_string .= ", ";
+						}
+						else
+						{
+							$csv_string .= "\n";
+						}
+					}
+				}
+			}
+			return $csv_string;
+		}
+
+		protected function download($data)
+		{
+		}	
+
 		private function defineController()
 		{
 			define('CONTROLLER', get_class($this));
@@ -99,6 +164,7 @@
 				$this->form_submit = true;
 			}
 		}
+
 
 		function dump_data()
 		{

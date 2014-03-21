@@ -1,13 +1,19 @@
 <?php
-
-	/*-----------------------------------------------------------------------------------------------
+	/*-------------------------------------------------------------------------------
 		Serenity - "Serene PHP made easy."
 
-		The baseModel class forms the framework for all of your models.  When creating a new model
-		it is required that it is a child of the baseModel class.
-	------------------------------------------------------------------------------------------------*/
+		Developer: Patrick Stephens
+		Email: pstephens2601@gmail.com
+		Github Repository: https://github.com/pstephens2601/Serenity
+		Creation Date: 8-17-2013
+		Last Edit Date: 3-21-2014
 
-	class baseModel extends serene_object 
+		Class Notes - The baseModel class forms the framework for all of your models.
+		When creating a new model it is required that it is a child of the baseModel 
+		class.
+	---------------------------------------------------------------------------------*/
+
+	class baseModel extends sereneObject 
 	{
 
 		protected $id; //holds the uid for the model

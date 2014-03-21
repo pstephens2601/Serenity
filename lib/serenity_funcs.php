@@ -1,11 +1,18 @@
 <?php
+	/*-------------------------------------------------------------------------------
+        Serenity - "Serene PHP made easy."
 
-	/*-----------------------------------------------------------------------------------------
-		This file contains functions required for the application.  Most of
-	 	these function are used to insert information into the layouts and views, however, some
-	 	are required for application setup in index.php.
-	 -----------------------------------------------------------------------------------------*/
+        Developer: Patrick Stephens
+        Email: pstephens2601@gmail.com
+        Github Repository: https://github.com/pstephens2601/Serenity
+        Creation Date: 8-20-2013
+        Last Edit Date: 3-21-2014
 
+        File Notes - This file contains functions required for the application.  
+        Most of these function are used to insert information into the layouts 
+        and views, however, some are required for application setup in index.php.
+    ---------------------------------------------------------------------------------*/
+	
 	//used to render the body of the page
 	function yield()
 	{

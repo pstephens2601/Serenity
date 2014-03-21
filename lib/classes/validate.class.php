@@ -1,12 +1,18 @@
 <?php
+	/*-------------------------------------------------------------------------------
+        Serenity - "Serene PHP made easy."
 
-	/*-----------------------------------------------------------------------------------------------
-	Serinity - "Serene PHP made easy."
-	
-	The validate class handles all input validation for the validators specified by your models.
-	------------------------------------------------------------------------------------------------*/
+        Developer: Patrick Stephens
+        Email: pstephens2601@gmail.com
+        Github Repository: https://github.com/pstephens2601/Serenity
+        Creation Date: 8-20-2013
+        Last Edit Date: 3-21-2014
 
-	class validate extends serene_object
+        Class Notes - The validate class handles all input validation for the 
+        validators specified by your models.
+    ---------------------------------------------------------------------------------*/
+
+	class validate extends sereneObject
 	{
 		
 		public static function length($value, $length, $type)
@@ -70,7 +76,5 @@
 				return false;
 			}
 		}
- 
 	}
-
 ?>
