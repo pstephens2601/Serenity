@@ -17,9 +17,81 @@
 		private $handle;
 		private $extension; //file extension such as .txt or .csv
 
-		function __construct()
-		{
+		//creates a new file.
+		function create($file_path) {
+			if (file_exists($file_path))
+			{
+				if (ENVIRONMENT == 'development')
+				{
+					$message = "Serene Error (Stay Calm!): ";
+					$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+					$message .= "- the file " . $file_path . " already exists.";
 
+					$this->print_error($message);
+				}
+				else
+				{
+					die(PRODUCTION_ERROR_MESSAGE);
+				}
+			}
+			else
+			{
+				if (!$this->handle = fopen($file_path, 'w'))
+				{
+					if (ENVIRONMENT == 'development')
+					{
+						$message = "Serene Error (Stay Calm!): ";
+						$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+						$message .= "- the file " . $file_path . " could not be created.";
+
+						$this->print_error($message);
+					}
+					else
+					{
+						die(PRODUCTION_ERROR_MESSAGE);
+					}
+				}
+			}
+		}
+
+		function open($file_path)
+		{
+			if (!$this->handle = fopen($file_path, 'w'))
+			{
+				if (ENVIRONMENT == 'development')
+				{
+					$message = "Serene Error (Stay Calm!): ";
+					$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+					$message .= "- the file " . $file_path . " could not be opened.";
+
+					$this->print_error($message);
+				}
+				else
+				{
+					die(PRODUCTION_ERROR_MESSAGE);
+				}
+			}
+		}
+
+		function write($data) {
+			fwrite($this->handle, $data);
+		}
+
+		function exists($file_path)
+		{
+			if (file_exists($file_path))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function __destruct()
+		{
+			fclose($this->handle);
 		}
 	}
 ?>

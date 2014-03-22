@@ -119,7 +119,7 @@
 					}
 					else
 					{
-						die('SERVER ERROR: Please try again later.');
+						die(PRODUCTION_ERROR_MESSAGE);
 					}
 				}
 			}
@@ -150,7 +150,7 @@
 					}
 					else
 					{
-						die('SERVER ERROR: Please try again later.');
+						die(PRODUCTION_ERROR_MESSAGE);
 					}
 				}
 			}
@@ -162,7 +162,7 @@
 				}
 				else
 				{
-					die('SERVER ERROR: Please try again later.');
+					die(PRODUCTION_ERROR_MESSAGE);
 				}
 			}
 
@@ -516,7 +516,7 @@
 				}
 				else
 				{
-					die('SERVER ERROR: Please try again later.');
+					die(PRODUCTION_ERROR_MESSAGE);
 				}
 			}
 		}

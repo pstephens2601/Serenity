@@ -31,7 +31,7 @@
 				}
 				else
 				{
-					die('SERVER CONNECTION ERROR: Please try again later.');
+					die(PRODUCTION_ERROR_MESSAGE);
 				}
 			}
 			else {

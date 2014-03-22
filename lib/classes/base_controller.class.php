@@ -107,7 +107,7 @@
 					{
 						if (in_array($key, func_get_arg(1)))
 						{
-							$csv_string .= "\"" . $item . "\"";
+							$csv_string .= $item;
 
 							if ($key != $last_index)
 							{
@@ -137,8 +137,38 @@
 			return $csv_string;
 		}
 
-		protected function download($data)
+		protected function download($file_name, $content)
 		{
+			$file = new file;
+
+			if (!$file->exists($file_name))
+			{
+				$file->create($file_name);
+				$file->write($content);
+			}
+			else
+			{
+				$file->open($file_name);
+				$file->write($content);
+			}
+			
+			if ($file->exists($file_name))
+			{
+				$filepath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/" . $file_name;
+
+				header('Pragma: public'); 	// required
+				header('Expires: 0');		// no cache
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($filepath)).' GMT');
+				header('Cache-Control: private',false);
+				header("Content-Type: application/octet-stream");
+				header('Content-Disposition: attachment; filename="'. basename($filepath) . '"');
+				header('Content-Transfer-Encoding: binary');
+				header('Content-Length: '. filesize($filepath));	// provide file size
+				header('Connection: close');
+				readfile($filepath); // push it out
+				exit();
+			}
 		}	
 
 		private function defineController()
