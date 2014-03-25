@@ -6,7 +6,7 @@
 		Email: pstephens2601@gmail.com
 		Github Repository: https://github.com/pstephens2601/Serenity
 		Creation Date: 8-17-2013
-		Last Edit Date: 3-21-2014
+		Last Edit Date: 3-24-2014
 
 		Class Notes - The base controller class will be the parent class for all of 
 		your controllers.  It will provide them with basic methods and functionality, 
