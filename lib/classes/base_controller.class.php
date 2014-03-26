@@ -6,7 +6,7 @@
 		Email: pstephens2601@gmail.com
 		Github Repository: https://github.com/pstephens2601/Serenity
 		Creation Date: 8-17-2013
-		Last Edit Date: 3-21-2014
+		Last Edit Date: 3-24-2014
 
 		Class Notes - The base controller class will be the parent class for all of 
 		your controllers.  It will provide them with basic methods and functionality, 
@@ -24,6 +24,7 @@
 		public $params = array();
 		public $form_submit = false;
 		protected $ajax_request = false;
+		private $download = false;
 
 		function __construct($action)
 		{
@@ -107,11 +108,18 @@
 					{
 						if (in_array($key, func_get_arg(1)))
 						{
-							$csv_string .= $item;
-
+							if (strripos($item, ',') !== false)
+							{
+								$csv_string .= '"' . trim($item) . '"';
+							}
+							else
+							{
+								$csv_string .= trim($item);
+							}
+							
 							if ($key != $last_index)
 							{
-								$csv_string .= ", ";
+								$csv_string .= ",";
 							}
 							else
 							{
@@ -154,20 +162,29 @@
 			
 			if ($file->exists($file_name))
 			{
-				$filepath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/" . $file_name;
+				if (headers_sent())
+				{
+					echo "WTF!?!";
+				}
+				else
+				{
+					$this->download = true;
 
-				header('Pragma: public'); 	// required
-				header('Expires: 0');		// no cache
-				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-				header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($filepath)).' GMT');
-				header('Cache-Control: private',false);
-				header("Content-Type: application/octet-stream");
-				header('Content-Disposition: attachment; filename="'. basename($filepath) . '"');
-				header('Content-Transfer-Encoding: binary');
-				header('Content-Length: '. filesize($filepath));	// provide file size
-				header('Connection: close');
-				readfile($filepath); // push it out
-				exit();
+					$filepath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/" . $file_name;
+
+					header('Pragma: public'); 	// required
+					header('Expires: 0');		// no cache
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Last-Modified: '. gmdate ('D, d M Y H:i:s', filemtime ($filepath)).' GMT');
+					header('Cache-Control: private',false);
+					header("Content-type: application/vnd.ms-excel");
+					header('Content-Disposition: attachment; filename="'. basename($filepath) . '"');
+					header('Content-Transfer-Encoding: binary');
+					//header('Content-Length: '. filesize($filepath));	// provide file size
+					header('Connection: close');
+					readfile($filepath); // push it out
+					exit();
+				}
 			}
 		}	
 
@@ -204,7 +221,7 @@
 
 		function __destruct()
 		{
-			if ($this->ajax_request == false)
+			if ($this->ajax_request == false && $this->download == false)
 			{
 				$this->dump_data();
 				include('app/views/layouts/' . $this->layout .'.php');
