@@ -14,7 +14,7 @@
     ---------------------------------------------------------------------------------*/
 	
 	//used to render the body of the page
-	function yield()
+	function view()
 	{
 		$num_args = func_num_args();
 

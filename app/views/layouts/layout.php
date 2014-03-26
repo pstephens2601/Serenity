@@ -16,7 +16,7 @@
 </head>
 	<body>
 		<?php 
-			yield(); //Serenity's yield function is used to insert the page's view.
+			view(); //Serenity's yield function is used to insert the page's view.
 		?>
 	</body>
 </html>
