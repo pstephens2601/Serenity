@@ -76,5 +76,14 @@
 				return false;
 			}
 		}
+
+		public static function escape($string) {
+			return addslashes($string);
+		}
+
+		public static function compress($string) {
+			$string = preg_replace('/\s+/', '', $string);
+			return $string;
+		}
 	}
 ?>

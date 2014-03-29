@@ -41,6 +41,10 @@
 			}
 		}
 
+		public function print_info() {
+			print_r(curl_getinfo($this->ch));
+		}
+
 		function __destruct()
 		{
 			curl_close($this->ch);
