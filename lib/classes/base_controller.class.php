@@ -145,6 +145,55 @@
 			return $csv_string;
 		}
 
+		//displays a pdf file in the browser without navaigating to that file
+		protected function deliver_file($file, $delivery_method)
+		{
+			$filepath = '';
+
+			if (func_num_args() == 3) {
+				if (func_get_arg(2) == true) {
+					$filepath .= $_SERVER['DOCUMENT_ROOT'] . ROOT;
+				}
+			}
+
+			$filepath .= $file;
+
+			if (file_exists($filepath))
+			{
+				header('Pragma: public'); 	// required
+				header('Expires: 0');		// no cache
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($filepath)).' GMT');
+				header('Cache-Control: private',false);
+				header('Content-Type: application/pdf');
+
+				if ($delivery_method == 0) //inline
+				{
+					//force download
+					header('Content-Disposition: attachment; filename="'. basename($filepath) . '"');
+				}
+				elseif ($delivery_method == 1) //download
+				{
+					//display in browser
+					header('Content-Disposition: inline; filename="'. basename($filepath) . '"');
+				}
+
+				header('Content-Transfer-Encoding: binary');
+				header('Content-Length: '. filesize($filepath));	// provide file size
+				header('Connection: close');
+				readfile($filepath);	// push it out
+				$this->download = true;
+				return true;
+			}
+			else
+			{
+				$this->download = true;
+				return false;
+			}
+
+			$this->download = true;
+		}
+
 		protected function download($file_name, $content)
 		{
 			$file = new file;
