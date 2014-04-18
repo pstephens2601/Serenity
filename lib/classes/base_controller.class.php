@@ -6,7 +6,7 @@
 		Email: pstephens2601@gmail.com
 		Github Repository: https://github.com/pstephens2601/Serenity
 		Creation Date: 8-17-2013
-		Last Edit Date: 3-24-2014
+		Last Edit Date: 4-18-2014
 
 		Class Notes - The base controller class will be the parent class for all of 
 		your controllers.  It will provide them with basic methods and functionality, 
@@ -246,18 +246,40 @@
 		{
 			if (isset($_POST[ get_class($this) . ':submit']))
 			{
-				//put each element into the $post_data array
-				foreach ( $_POST as $key => $value)
+				if ($this->form_tolken_valid())
 				{
-					$fields = explode( ':', $key );
-
-					if (count($fields) < 2)
+					//put each element into the $post_data array
+					foreach ( $_POST as $key => $value)
 					{
-						$this->params[$fields[0]] = htmlspecialchars($value);
-					}
-				}
+						$fields = explode( ':', $key );
 
-				$this->form_submit = true;
+						if (count($fields) < 2)
+						{
+							$this->params[$fields[0]] = htmlspecialchars($value);
+						}
+					}
+
+					$this->form_submit = true;
+				}
+			}
+		}
+
+		private function form_tolken_valid()
+		{
+			if (isset($_POST['CSFR_Tolken']))
+			{
+				if ($_POST['CSFR_Tolken'] == $_SESSION['serene_CSRF_tolken']);
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
 			}
 		}
 
