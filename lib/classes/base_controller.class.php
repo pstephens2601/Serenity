@@ -268,7 +268,7 @@
 		{
 			if (isset($_POST['CSFR_Tolken']))
 			{
-				if ($_POST['CSFR_Tolken'] == $_SESSION['serene_CSRF_tolken']);
+				if ($_POST['CSFR_Tolken'] == $_SESSION['serene_CSRF_tolken'])
 				{
 					return true;
 				}

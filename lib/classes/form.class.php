@@ -35,7 +35,7 @@
 			}
 			else
 			{
-				$this->CSFR_Tolken = md5(microtime() . "rka4$rb584");
+				$this->CSFR_Tolken = md5(microtime() . 'rka4$rb584');
 				$_SESSION['serene_CSRF_tolken'] = $this->CSFR_Tolken;
 			}
 
