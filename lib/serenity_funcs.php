@@ -213,9 +213,20 @@
 		{
 			echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
 		}
+		elseif ($num_args == 3) {
+			if (func_get_arg(2) == true) {
+				echo '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
+			}
+			else {
+				$html = '<img src="' . ROOT . 'app/assets/images/' . $file_name . '" class="' . func_get_arg(1) . '">';
+				return $html;
+			}
+		}
 		else
-		{
-			die('Serenity Error: Invalid number of arguments passed to img()');
+		{	if (ENVIRONMENT == 'development')
+			{
+				echo "<div class=\"Serene_Error\">Serene Error (Stay Calm!): Invalid number of arguments passed to " . __METHOD__ . "() on line " . __LINE__ . "</div>";
+			}
 		}
 	}
 
