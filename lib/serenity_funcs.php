@@ -6,7 +6,7 @@
         Email: pstephens2601@gmail.com
         Github Repository: https://github.com/pstephens2601/Serenity
         Creation Date: 8-20-2013
-        Last Edit Date: 3-21-2014
+        Last Edit Date: 5-2-2014
 
         File Notes - This file contains functions required for the application.  
         Most of these function are used to insert information into the layouts 
@@ -101,7 +101,11 @@
 			foreach ($css_files as $css) {
 				if (($css != '.') && ($css != '..') && (!in_array($css, $load_priorities)))
 				{
-					echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
+					$filename_split = explode(".", $css);
+
+					if (isset($filename_split[1]) && $filename_split[1] == 'css') {
+						echo '<link rel="stylesheet" type="text/css" href="' . ROOT . 'app/assets/stylesheets/' . $css . "\">\n";
+					}
 				}
 			}
 		}
