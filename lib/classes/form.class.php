@@ -6,7 +6,7 @@
 		Email: pstephens2601@gmail.com
 		Github Repository: https://github.com/pstephens2601/Serenity
 		Creation Date: 10-7-2013
-		Last Edit Date: 4-18-2014
+		Last Edit Date: 5-5-2014
 
 		Class Notes - The form class is used to quickly construct Serenity compliant
 		forms.
@@ -94,14 +94,27 @@
 
 					$html .= ">\n";
 					break;
-				case 'submit': // Argument format (type, value, class(optional))
-					$html .= '<input type="submit" value="' . func_get_arg(1) . '" name="' . $this->controller . ':submit" class="' . func_get_arg(2). '">';
+				case 'submit': // Argument format (type, value, class(optional), javascript(optional))
+					$num_args = func_num_args();
+
+					if($num_args == 2)
+					{
+						$html .= '<input type="submit" value="' . func_get_arg(1) . '" name="' . $this->controller . ':submit">';
+					}
+					elseif ($num_args == 3)
+					{
+						$html .= '<input type="submit" value="' . func_get_arg(1) . '" name="' . $this->controller . ':submit" class="' . func_get_arg(2). '">';
+					}
+					elseif ($num_args == 4)
+					{
+						$html .= '<input type="submit" value="' . func_get_arg(1) . '" name="' . $this->controller . ':submit" class="' . func_get_arg(2). '" ' . func_get_arg(3) . '>';
+					}
+					
 					break;
 				default:
 					die('Serenity Error: Invalid type given for input()');
 					break;
 			}
-
 			echo $html;
 		}
 

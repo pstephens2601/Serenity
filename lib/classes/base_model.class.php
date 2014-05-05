@@ -6,7 +6,7 @@
 		Email: pstephens2601@gmail.com
 		Github Repository: https://github.com/pstephens2601/Serenity
 		Creation Date: 8-17-2013
-		Last Edit Date: 3-21-2014
+		Last Edit Date: 5-5-2014
 
 		Class Notes - The baseModel class forms the framework for all of your models.
 		When creating a new model it is required that it is a child of the baseModel 
@@ -258,6 +258,10 @@
 						return false;
 					}
 				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 
@@ -365,8 +369,17 @@
 		}
 
 		/*------------------------------------------------------
-			Runs the form validations declared in $validators.
+			Public method that runs the form validations 
+			declared in $validators and returns a boolean
+			value set to true if the form validates and
+			set to false if it does not.
+		-------------------------------------------------------*/
+		public function form_validates() {
+			return $this->run_validation();
+		}
 
+		/*------------------------------------------------------
+			Runs the form validations declared in $validators.
 		-------------------------------------------------------*/
 		protected function run_validation()
 		{
@@ -378,7 +391,7 @@
 				{
 					$action_pair = explode(':', $current_action);
 				
-					//if the action pair is the var name or is_present
+					//if the action pair is the variable name, or the keyword is_present
 					if (count($action_pair) == 1)
 					{
 						if ($action_pair[0] == 'unique')
@@ -391,7 +404,8 @@
 						}
 						else
 						{
-							$var = $action_pair[0];
+							//set the name of the variable being checked
+							$var = $action_pair[0]; 
 						}
 					}
 					else
@@ -403,6 +417,10 @@
 								{
 									$this->check_for_validation_message($var, 'min-length');
 									$this->is_valid = false;
+									return false;
+								}
+								else {
+									return true;
 								}
 								break;
 							case 'max-length':
@@ -410,6 +428,10 @@
 								{
 									$this->check_for_validation_message($var, 'max-length');
 									$this->is_valid = false;
+									return false;
+								}
+								else {
+									return true;
 								}
 								break;
 							case 'format':
@@ -417,6 +439,10 @@
 								{
 									$this->check_for_validation_message($var, 'format');
 									$this->is_valid = false;
+									return false;
+								}
+								else {
+									return true;
 								}
 								break;
 							case 'match':
@@ -425,18 +451,25 @@
 								{
 									$this->check_for_validation_message($var, 'match');
 									$this->is_valid = false;
+									return false;
+								}
+								else {
+									return true;
 								}
 								break;
 							default:
 								if (ENVIRONMENT == 'development')
 								{
-									$this->print_error("Serene Error (Stay Clam!):  Invalid validation checked declared.");
+									$message = "Serene Error (Stay Calm!): ";
+									$message .= "There was an error when executing " . __METHOD__ . "() on line " . __LINE__;
+									$message .= "- " . $action_pair[0] . " is an invalid validation method.";
+
+									$this->print_error($message);
 								}
 								else
 								{
-									die('SERVER ERROR: Please try again later.');
-								}
-								break;
+									die(PRODUCTION_ERROR_MESSAGE);
+								}	
 						}
 					}
 				}
