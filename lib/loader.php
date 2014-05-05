@@ -17,9 +17,11 @@
 	
 	function load_files()
 	{
-		function __autoload($class) {
+		function class_loader($class) {
 			require_once('lib/classes/' . $class . '.class.php');
 		}
+
+		spl_autoload_register('class_loader');
 
 		load_file('config/serenity_config.php');
 		load_file('serenity_funcs.php');
