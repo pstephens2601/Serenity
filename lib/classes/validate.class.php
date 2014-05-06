@@ -6,7 +6,7 @@
         Email: pstephens2601@gmail.com
         Github Repository: https://github.com/pstephens2601/Serenity
         Creation Date: 8-20-2013
-        Last Edit Date: 3-21-2014
+        Last Edit Date: 5-5-2014
 
         Class Notes - The validate class handles all input validation for the 
         validators specified by your models.
@@ -19,7 +19,7 @@
 		{
 			if ($type == 'max')
 			{
-				if (strlen($value) < $length)
+				if (strlen($value) <= $length)
 				{
 					return true;
 				}
@@ -30,7 +30,7 @@
 			}
 			elseif ($type == 'min')
 			{
-				if (strlen($value) < $length)
+				if (strlen($value) <= $length)
 				{
 					return false;
 				}

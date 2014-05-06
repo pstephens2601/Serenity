@@ -275,6 +275,11 @@
 			return $this->messages;
 		}
 
+		function get_validation_messages()
+		{
+			return $this->validation_errors;
+		}
+
 		function form()
 		{
 			return $this->form;
@@ -383,8 +388,9 @@
 		-------------------------------------------------------*/
 		protected function run_validation()
 		{
+
 			$var;
-			
+
 			foreach ($this->validators as $validator)
 			{
 				foreach ($validator as $current_action)
@@ -405,7 +411,7 @@
 						else
 						{
 							//set the name of the variable being checked
-							$var = $action_pair[0]; 
+							$var = $action_pair[0];
 						}
 					}
 					else
@@ -417,10 +423,6 @@
 								{
 									$this->check_for_validation_message($var, 'min-length');
 									$this->is_valid = false;
-									return false;
-								}
-								else {
-									return true;
 								}
 								break;
 							case 'max-length':
@@ -428,10 +430,6 @@
 								{
 									$this->check_for_validation_message($var, 'max-length');
 									$this->is_valid = false;
-									return false;
-								}
-								else {
-									return true;
 								}
 								break;
 							case 'format':
@@ -439,10 +437,6 @@
 								{
 									$this->check_for_validation_message($var, 'format');
 									$this->is_valid = false;
-									return false;
-								}
-								else {
-									return true;
 								}
 								break;
 							case 'match':
@@ -451,10 +445,6 @@
 								{
 									$this->check_for_validation_message($var, 'match');
 									$this->is_valid = false;
-									return false;
-								}
-								else {
-									return true;
 								}
 								break;
 							default:
@@ -474,6 +464,8 @@
 					}
 				}
 			}
+
+			return $this->is_valid;
 		}
 
 		#	Used to build database queries.
@@ -621,7 +613,7 @@
 
 					if ($message_exists == false)
 					{
-						$this->messages[] = $validation_message[2];
+						$this->validation_errors[] = $validation_message[2];
 					}
 				}
 			}
