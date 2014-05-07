@@ -30,7 +30,7 @@
 			}
 			elseif ($type == 'min')
 			{
-				if (strlen($value) <= $length)
+				if (strlen($value) < $length)
 				{
 					return false;
 				}
