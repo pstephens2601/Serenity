@@ -1,31 +1,19 @@
-/*-------------------------------------------------------------------------------
-    Serenity - "Serene PHP made easy."
+/* Serenity CSS Framework.  This framework includes basic classes that format
+ * Serenity messages, and give the user a library of predefined classes for simple layout.
+ * As of this version this is not intended to be a full fledged CSS layout framework.
+ */
 
-    Developer: Patrick Stephens
-    Email: pstephens2601@gmail.com
-    Github Repository: https://github.com/pstephens2601/Serenity
-    Creation Date: 8-20-2013
-    Last Edit Date: 3-21-2014
 
-    File Notes - Serenity CSS Framework.  This framework includes basic classes 
-    that format Serenity messages, and give the user a library of predefined 
-    classes for simple layout. As of this version this is not intended to be a 
-    full fledged CSS layout framework.
----------------------------------------------------------------------------------*/
 
 /* Text Styles */
-.text-red {
+.red-text {
 	color: red;
 }
 .bold {
 	font-weight: bold;
 }
-
-/* Alignment Classes */
-
-.block-center {
-	margin-left: auto;
-	margin-right: auto;
+.underline {
+	text-decoration: underline;
 }
 
 /* Margin Bottom Classes */
@@ -150,8 +138,22 @@ div.Serene_Error {
 	color: white;
 	font-family: arial;
 	font-size: 1.2em;
-	font-weight: bold;
 	border: solid;
 	border-color: #A40802;
+	border-width: 2px;
+}
+
+div.Serene_Debug_Message {
+	width: 80%;
+	padding: 30px;
+	margin: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	background: #EEEEEE;
+	color: black;
+	font-family: arial;
+	font-size: 1.2em;
+	border: solid;
+	border-color: #bababa;
 	border-width: 2px;
 }
